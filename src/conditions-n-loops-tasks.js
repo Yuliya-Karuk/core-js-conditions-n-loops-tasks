@@ -21,8 +21,8 @@
  *  0  => true
  *  -5 => false
  */
-function isPositive(/* number */) {
-  throw new Error('Not implemented');
+function isPositive(number) {
+  return number >= 0;
 }
 
 /**
@@ -38,8 +38,15 @@ function isPositive(/* number */) {
  *  -5, 0, 5      => 5
  *  -0.1, 0, 0.2  => 0.2
  */
-function getMaxNumber(/* a, b, c */) {
-  throw new Error('Not implemented');
+function getMaxNumber(a, b, c) {
+  const arr = [a, b, c];
+  let maxValue = arr[0];
+  for (let i = 1; i < arr.length; i += 1) {
+    if (arr[i] > maxValue) {
+      maxValue = arr[i];
+    }
+  }
+  return maxValue;
 }
 
 /**
@@ -81,8 +88,13 @@ function canQueenCaptureKing(/* queen, king */) {
  *  2, 2, 5   => false
  *  3, 0, 3   => false
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  const sides = [a, b, c].sort((i, j) => i - j);
+  if (sides.includes(0)) return false;
+  if (sides[0] === sides[1] || sides[1] === sides[2] || sides[2] === sides[0]) {
+    return sides[0] + sides[1] > sides[2];
+  }
+  return false;
 }
 
 /**
@@ -116,8 +128,48 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  let result = '';
+  for (let i = 0; i < numberStr.length; i += 1) {
+    switch (numberStr[i]) {
+      case '-':
+        result = result.concat('minus', ' ');
+        break;
+      case '0':
+        result = result.concat('zero', ' ');
+        break;
+      case '1':
+        result = result.concat('one', ' ');
+        break;
+      case '2':
+        result = result.concat('two', ' ');
+        break;
+      case '3':
+        result = result.concat('three', ' ');
+        break;
+      case '4':
+        result = result.concat('four', ' ');
+        break;
+      case '5':
+        result = result.concat('five', ' ');
+        break;
+      case '6':
+        result = result.concat('six', ' ');
+        break;
+      case '7':
+        result = result.concat('seven', ' ');
+        break;
+      case '8':
+        result = result.concat('eight', ' ');
+        break;
+      case '9':
+        result = result.concat('nine', ' ');
+        break;
+      default:
+        result = result.concat('point', ' ');
+    }
+  }
+  return result.trim();
 }
 
 /**
