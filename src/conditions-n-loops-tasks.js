@@ -287,8 +287,24 @@ function isContainNumber(num, digit) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  let result = -1;
+  for (let i = 1; i < arr.length; i += 1) {
+    let leftSum = 0;
+    let rightSum = 0;
+    for (let j = 0; j < arr.length; j += 1) {
+      if (j < i) {
+        leftSum += arr[j];
+      } else if (j > i) {
+        rightSum += arr[j];
+      }
+    }
+    if (leftSum === rightSum) {
+      result = i;
+      break;
+    }
+  }
+  return result;
 }
 
 /**
@@ -313,9 +329,15 @@ function getBalanceIndex(/* arr */) {
  *        ]
  */
 function getSpiralMatrix(/* size */) {
+  // let top = 0;
+  // let left = 0;
+  // let bottom = size - 1;
+  // let right = size - 1;
+  // const array = Array.from({ length: size }, () => []);
+  // let direction = 1;
+
   throw new Error('Not implemented');
 }
-
 /**
  * Sorts an array of numbers in ascending order in place.
  * Employ any sorting algorithm of your choice.
@@ -330,8 +352,20 @@ function getSpiralMatrix(/* size */) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+
+// Сортировка вставками (Insertion sort)
+function sortByAsc(arr) {
+  const resultArr = arr;
+  for (let i = 1; i < resultArr.length; i += 1) {
+    const current = resultArr[i];
+    let j = i;
+    while (j > 0 && resultArr[j - 1] > current) {
+      resultArr[j] = resultArr[j - 1];
+      j -= 1;
+    }
+    resultArr[j] = current;
+  }
+  return resultArr;
 }
 
 /**
