@@ -96,10 +96,13 @@ function canQueenCaptureKing(queen, king) {
  *  3, 0, 3   => false
  */
 function isIsoscelesTriangle(a, b, c) {
-  const sides = [a, b, c].sort((i, j) => i - j);
-  if (sides.includes(0)) return false;
-  if (sides[0] === sides[1] || sides[1] === sides[2] || sides[2] === sides[0]) {
-    return sides[0] + sides[1] > sides[2];
+  if (a === 0 || b === 0 || c === 0) return false;
+  if (
+    (a === b && a + b > c) ||
+    (b === c && b + c > a) ||
+    (c === a && c + a > b)
+  ) {
+    return true;
   }
   return false;
 }
@@ -120,37 +123,40 @@ function isIsoscelesTriangle(a, b, c) {
  */
 function convertToRomanNumerals(num) {
   let result = '';
-  result += 'X'.repeat(Math.floor(num / 10));
+  const numOfX = Math.floor(num / 10);
+  for (let i = 0; i < numOfX; i += 1) {
+    result += 'X';
+  }
   switch (num % 10) {
     case 1:
-      result = result.concat('I');
+      result += 'I';
       break;
     case 2:
-      result = result.concat('II');
+      result += 'II';
       break;
     case 3:
-      result = result.concat('III');
+      result += 'III';
       break;
     case 4:
-      result = result.concat('IV');
+      result += 'IV';
       break;
     case 5:
-      result = result.concat('V');
+      result += 'V';
       break;
     case 6:
-      result = result.concat('VI');
+      result += 'VI';
       break;
     case 7:
-      result = result.concat('VII');
+      result += 'VII';
       break;
     case 8:
-      result = result.concat('VIII');
+      result += 'VIII';
       break;
     case 9:
-      result = result.concat('IX');
+      result += 'IX';
       break;
     default:
-      result = result.concat('');
+      result += '';
   }
   return result;
 }
@@ -175,43 +181,46 @@ function convertNumberToString(numberStr) {
   for (let i = 0; i < numberStr.length; i += 1) {
     switch (numberStr[i]) {
       case '-':
-        result = result.concat('minus', ' ');
+        result += 'minus';
         break;
       case '0':
-        result = result.concat('zero', ' ');
+        result += 'zero';
         break;
       case '1':
-        result = result.concat('one', ' ');
+        result += 'one';
         break;
       case '2':
-        result = result.concat('two', ' ');
+        result += 'two';
         break;
       case '3':
-        result = result.concat('three', ' ');
+        result += 'three';
         break;
       case '4':
-        result = result.concat('four', ' ');
+        result += 'four';
         break;
       case '5':
-        result = result.concat('five', ' ');
+        result += 'five';
         break;
       case '6':
-        result = result.concat('six', ' ');
+        result += 'six';
         break;
       case '7':
-        result = result.concat('seven', ' ');
+        result += 'seven';
         break;
       case '8':
-        result = result.concat('eight', ' ');
+        result += 'eight';
         break;
       case '9':
-        result = result.concat('nine', ' ');
+        result += 'nine';
         break;
       default:
-        result = result.concat('point', ' ');
+        result += 'point';
+    }
+    if (i !== numberStr.length - 1) {
+      result += ' ';
     }
   }
-  return result.trim();
+  return result;
 }
 
 /**
@@ -375,20 +384,30 @@ function rotateMatrix(/* matrix */) {
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
 
-// Сортировка вставками (Insertion sort)
 function sortByAsc(arr) {
-  const resultArr = arr;
-  for (let i = 1; i < resultArr.length; i += 1) {
-    const current = resultArr[i];
-    let j = i;
-    while (j > 0 && resultArr[j - 1] > current) {
-      resultArr[j] = resultArr[j - 1];
-      j -= 1;
+  const startArr = arr;
+  if (arr.length <= 1) return arr;
+
+  const pivot = arr[0];
+  let leftArr = [];
+  let rightArr = [];
+  for (let i = 1; i < arr.length; i += 1) {
+    if (arr[i] < pivot) {
+      leftArr[leftArr.length] = arr[i];
+    } else {
+      rightArr[rightArr.length] = arr[i];
     }
-    resultArr[j] = current;
   }
-  return resultArr;
+
+  leftArr = sortByAsc(leftArr);
+  rightArr = sortByAsc(rightArr);
+  const result = [...leftArr, pivot, ...rightArr];
+  for (let i = 0; i < result.length; i += 1) {
+    startArr[i] = result[i];
+  }
+  return startArr;
 }
+// console.log(sortByAsc([-2, 9, 5, -3, 100, 77, 20, 21, 45, 7, 5, 10]));
 
 /**
  * Shuffles characters in a string so that the characters with an odd index are moved to the end of the string at each iteration.
