@@ -509,8 +509,33 @@ function shuffleChar(str, iterations) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  throw new Error('Not implemented');
+function getNearestBigger(number) {
+  const numArr = Array.from(`${number}`, (el) => Number(el));
+  let index;
+  let el;
+  for (let i = numArr.length - 1; i > 0; i -= 1) {
+    if (numArr[i] > numArr[i - 1]) {
+      index = i - 1;
+      el = numArr[index];
+      break;
+    }
+  }
+  const leftArr = numArr.splice(0, index);
+  const rightPart = numArr.sort((a, b) => a - b);
+  let nextEl;
+  let indexNextEl;
+  for (let i = 0; i < rightPart.length; i += 1) {
+    if (rightPart[i] === el) {
+      nextEl = rightPart[i + 1];
+      indexNextEl = i + 1;
+    }
+  }
+  const rightArr = [
+    ...rightPart.splice(0, indexNextEl),
+    ...rightPart.splice(1),
+  ];
+  const resNumber = +[...leftArr, nextEl, ...rightArr].join('');
+  return resNumber;
 }
 
 module.exports = {
